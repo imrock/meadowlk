@@ -1,4 +1,5 @@
 ﻿var express = require('express');
+var fortune = require('./lib/fortune.js');
 
 var app = express();
 
@@ -10,14 +11,6 @@ app.set('view engine', 'handlebars');
 	
 app.set('port', process.env.PORT || 3000);
 
-/////
-var fortunes = [
-	"Победи свои страхи, или они победят тебя.",
-	"Рекам нужны истоки.",
-	"Не бойся неведомого.",
-	"Тебя ждет приятный сюрпиз.",
-	"Будь проще везде, где только можно.",
-];
 
 app.use(express.static('public'));
 
@@ -27,9 +20,7 @@ app.get('/', function(reg, res) {
 	res.render('home');
 });
 app.get('/about', function(req, res) {
-	var randomFortune =
-		fortunes[Math.floor(Math.random() * fortunes.length)];
-	res.render('about', { fortune: randomFortune });
+	res.render('about', { fortune: fortune.getFortune() });
 });
 
 // пользовательськая страница 404
